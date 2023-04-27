@@ -1,0 +1,134 @@
+DROP TABLE adm;
+
+DROP TABLE cart;
+DROP TABLE cust CASCADE CONSTRAINTS;
+DROP TABLE item CASCADE CONSTRAINTS;
+
+DROP TABLE sales;
+DROP TABLE marker;
+
+DROP SEQUENCE item_seq;
+DROP SEQUENCE cart_seq;
+DROP SEQUENCE marker_seq;
+
+CREATE TABLE adm(
+    id VARCHAR2(10),
+    pwd VARCHAR2(10) NOT NULL,
+    lev INT NOT NULL
+);
+INSERT INTO adm VALUES ('admin01','pwd01',1);
+INSERT INTO adm VALUES ('admin02','pwd02',2);
+INSERT INTO adm VALUES ('admin03','pwd03',3);
+
+SELECT * FROM adm;
+
+
+CREATE TABLE cust(
+    id VARCHAR2(10),
+    pwd VARCHAR2(60) NOT NULL,
+    name VARCHAR2(20) NOT NULL
+);
+ALTER TABLE cust ADD PRIMARY KEY(id);
+
+INSERT INTO cust VALUES ('id01','pwd01','홍말숙');
+INSERT INTO cust VALUES ('id02','pwd02','이말숙');
+INSERT INTO cust VALUES ('id03','pwd03','정말숙');
+
+SELECT * FROM cust;
+
+
+-- item table
+
+CREATE TABLE item(
+   id INT,
+   name VARCHAR2(20) NOT NULL,
+   price INT NOT NULL,
+   imgname VARCHAR2(30),
+   rdate DATE
+);
+ALTER TABLE item ADD PRIMARY KEY (id);
+ALTER TABLE item ADD CHECK (price > 0);
+
+CREATE SEQUENCE item_seq
+    INCREMENT BY 1
+    START WITH 100;
+INSERT INTO item VALUES (item_seq.NEXTVAL,'반바지',10000,'a.jpg',SYSDATE);
+INSERT INTO item VALUES (item_seq.NEXTVAL,'반바지',20000,'b.jpg',SYSDATE);
+INSERT INTO item VALUES (item_seq.NEXTVAL,'반팔',30000,'c.jpg',SYSDATE);
+INSERT INTO item VALUES (item_seq.NEXTVAL,'긴팔',40000,'d.jpg',SYSDATE);
+
+SELECT * FROM item;
+
+
+
+
+
+CREATE TABLE cart(
+    id INT,
+    cust_id VARCHAR2(10),
+    item_id INT,
+    cnt INT,
+    rdate DATE
+);
+ALTER TABLE cart ADD  PRIMARY KEY(id);
+ALTER TABLE cart ADD FOREIGN KEY (cust_id) REFERENCES cust (id);
+ALTER TABLE cart ADD FOREIGN KEY (item_id) REFERENCES item (id);
+CREATE SEQUENCE cart_seq
+    INCREMENT BY 1
+    START WITH 100;
+INSERT INTO cart VALUES (cart_seq.NEXTVAL, 'id01', 100, 2, SYSDATE);
+
+SELECT * FROM cart;
+
+CREATE TABLE sales(
+    rdate DATE,
+    price INT,
+    gender CHAR(1)
+);
+
+INSERT INTO sales VALUES (TO_DATE('2020-01-02','YYYY-MM-DD'), 100000, 'M');
+INSERT INTO sales VALUES (TO_DATE('2020-01-02','YYYY-MM-DD'), 200000, 'F');
+INSERT INTO sales VALUES (TO_DATE('2020-02-02','YYYY-MM-DD'), 300000, 'M');
+INSERT INTO sales VALUES (TO_DATE('2020-02-02','YYYY-MM-DD'), 400000, 'F');
+INSERT INTO sales VALUES (TO_DATE('2020-03-02','YYYY-MM-DD'), 450000, 'M');
+INSERT INTO sales VALUES (TO_DATE('2020-03-02','YYYY-MM-DD'), 780000, 'F');
+INSERT INTO sales VALUES (TO_DATE('2020-04-02','YYYY-MM-DD'), 500000, 'M');
+INSERT INTO sales VALUES (TO_DATE('2020-04-02','YYYY-MM-DD'), 330000, 'F');
+INSERT INTO sales VALUES (TO_DATE('2020-05-02','YYYY-MM-DD'), 670000, 'M');
+INSERT INTO sales VALUES (TO_DATE('2020-05-02','YYYY-MM-DD'), 220000, 'F');
+INSERT INTO sales VALUES (TO_DATE('2020-06-02','YYYY-MM-DD'), 880000, 'M');
+INSERT INTO sales VALUES (TO_DATE('2020-06-02','YYYY-MM-DD'), 120000, 'F');
+INSERT INTO sales VALUES (TO_DATE('2020-07-02','YYYY-MM-DD'), 300000, 'M');
+INSERT INTO sales VALUES (TO_DATE('2020-07-02','YYYY-MM-DD'), 220000, 'F');
+INSERT INTO sales VALUES (TO_DATE('2020-08-02','YYYY-MM-DD'), 490000, 'M');
+INSERT INTO sales VALUES (TO_DATE('2020-08-02','YYYY-MM-DD'), 480000, 'F');
+
+SELECT * FROM sales;
+
+CREATE TABLE marker(
+	id INT,
+    title VARCHAR2(30),
+    target VARCHAR2(30),
+    lat FLOAT,
+    lng FLOAT,
+    img VARCHAR2(30),
+    loc CHAR(1)
+);
+ALTER TABLE marker ADD PRIMARY KEY (id);
+CREATE SEQUENCE marker_seq
+    INCREMENT BY 1
+    START WITH 100;
+
+INSERT INTO marker VALUES (marker_seq.NEXTVAL, '국밥집', 'http://www.naver.com', 37.638446, 127.012702, 'kuk.jpg', 'S');
+INSERT INTO marker VALUES (marker_seq.NEXTVAL, '닭발집', 'http://www.daum.net', 37.638440, 127.011702, 'dak.jpg', 'S');
+INSERT INTO marker VALUES (marker_seq.NEXTVAL, '양꼬치집', 'http://www.google.com', 37.638346, 127.012602, 'yang.jpg', 'S');
+
+INSERT INTO marker VALUES (marker_seq.NEXTVAL, '국밥집', 'http://www.naver.com', 35.1796456, 129.0785432, 'kuk.jpg', 'B');
+INSERT INTO marker VALUES (marker_seq.NEXTVAL, '닭발집', 'http://www.daum.net', 35.1799456, 129.0785432, 'dak.jpg', 'B');
+INSERT INTO marker VALUES (marker_seq.NEXTVAL, '양꼬치집', 'http://www.google.com', 35.1796456, 129.0637432, 'yang.jpg', 'B');
+
+INSERT INTO marker VALUES (marker_seq.NEXTVAL, '국밥집', 'http://www.naver.com', 33.4998002, 126.5352787, 'kuk.jpg', 'J');
+INSERT INTO marker VALUES (marker_seq.NEXTVAL, '닭발집', 'http://www.daum.net', 33.4997002, 126.5391787, 'dak.jpg', 'J');
+INSERT INTO marker VALUES (marker_seq.NEXTVAL, '양꼬치집', 'http://www.google.com', 33.4996002, 126.5273787, 'yang.jpg', 'J');
+
+SELECT * FROM marker;
