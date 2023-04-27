@@ -50,10 +50,9 @@ public class MarkerService implements KBService <Integer, Marker> {
         return mapper.selectall();
     }
 
-//
-//    @Override
-//    public List<Marker> getmarker(String loc) throws Exception {
-//        return mapper.getmarker(loc);
-//    }
+
+    public List<Marker> getmarker(String loc) throws Exception {
+        return mapper.getmarker(loc);
+    }
 
 }

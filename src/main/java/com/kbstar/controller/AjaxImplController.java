@@ -76,7 +76,7 @@ public class AjaxImplController {
     public Object markers(String loc) throws Exception{
         List<Marker> list = null;
         try {
-            list = service.get();
+            list = service.getmarker(loc);
         } catch (Exception e) {
             log.info("---------");
             throw new RuntimeException(e);

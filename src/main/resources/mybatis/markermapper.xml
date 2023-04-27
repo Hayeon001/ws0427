@@ -21,8 +21,8 @@
     </delete>
 
 
-<!--    <select id="getmarker" parameterType="String" resultType="marker">-->
-<!--        SELECT * FROM marker WHERE loc=#{loc}-->
-<!--    </select>-->
+    <select id="getmarker" parameterType="String" resultType="marker">
+        SELECT * FROM marker WHERE loc=#{loc}
+    </select>
 
 </mapper>
